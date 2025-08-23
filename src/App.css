@@ -28,7 +28,7 @@ body {
   position: relative;
   min-height: 100vh;
   background: #3376E0;
-  padding: 2rem 0;
+  padding: 0.5rem 0;
   overflow: hidden;
 }
 
@@ -36,8 +36,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem 0;
-  margin-bottom: 2rem;
+  padding: 0;
+  margin-bottom: 0;
   width: 100%;
 }
 
@@ -54,7 +54,7 @@ body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 0 4rem;
+  padding: 1rem 0 2rem;
 }
 
 .doctor-section {
@@ -76,8 +76,8 @@ body {
 }
 
 .doctor-photo {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
   border-radius: 12px;
   object-fit: cover;
   aspect-ratio: 1 / 1;
@@ -722,8 +722,8 @@ body {
   }
   
   .doctor-photo {
-    width: 350px;
-    height: 350px;
+    width: 450px;
+    height: 450px;
   }
   
   .cta-doctor-photo {
