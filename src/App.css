@@ -668,6 +668,7 @@ body {
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
+  white-space: nowrap;
 }
 
 .footer-whatsapp-button {
@@ -701,17 +702,20 @@ body {
 
 .footer-bottom-new p {
   font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 @media (max-width: 480px) {
   .footer-bottom-new p {
     font-size: 0.75rem;
+    white-space: normal;
   }
 }
 
 @media (max-width: 360px) {
   .footer-bottom-new p {
     font-size: 0.7rem;
+    white-space: normal;
   }
 }
 
