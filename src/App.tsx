@@ -54,7 +54,7 @@ function App() {
 
   const redirectToWhatsApp = (buttonName) => {
     console.log(`Button clicked: ${buttonName}`);
-    window.open("https://wa.me/5547989106241", "_blank");
+    window.open("https://wa.me/5547999224685", "_blank");
   };
 
   const handleSubmit = async (e) => {
@@ -64,7 +64,7 @@ function App() {
     try {
       const message = `AGENDAMENTO DE CONSULTA - Doutor Agora 24 Horas\n\nNome: ${formData.name}\nData de Nascimento: ${formData.birthdate}\nE-mail: ${formData.email}`;
       const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/5547989106241?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/5547999224685?text=${encodedMessage}`;
 
       window.open(whatsappUrl, "_blank");
 
