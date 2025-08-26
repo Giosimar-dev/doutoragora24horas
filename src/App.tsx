@@ -107,7 +107,7 @@ function App() {
               <h1>
                 <span className="title-line">AGENDE CONSULTA</span>
                 <span className="title-line">MÉDICA ONLINE</span>
-                <span className="price-highlight">POR APENAS R$34,90</span>
+                <span className="price-highlight">POR APENAS R$39,50</span>
               </h1>
               <p className="hero-subtitle">
                 Consulta rápida e eficiente com médicos especializados, sem sair de casa
@@ -229,7 +229,7 @@ function App() {
               <h2>
                 Atendimento Clínico Geral Online
                 por{' '}
-                <span className="price-highlight">R$34,90</span>
+                <span className="price-highlight">R$39,50</span>
               </h2>
               <p>
                 Com agilidade e comodidade direto na sua casa. Cuide da sua saúde onde estiver.
