@@ -19,6 +19,22 @@
 
   gtag('config', 'AW-17503064450');
 </script>
+
+<!-- Event snippet for Enviar formulário de lead conversion page -->
+<script>
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+        'send_to': 'AW-17503064450/nx2lCOajIWbEIKjppB',
+        'event_callback': callback
+    });
+    return false;
+  }
+</script>
     <title>Doutor Agora 24 Horas - Consulta Online por R$39,50</title>
   </head>
   <body>
