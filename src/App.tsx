@@ -104,11 +104,11 @@ function App() {
     setIsSubmitting(true);
     
     try {
-      // Track conversion
-      trackConversion('form_submit');
-      
       // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Track conversion
+      trackConversion('form_submit');
       
       setSubmitMessage('Formulário enviado com sucesso! Entraremos em contato em breve.');
       setFormData({ name: '', birthdate: '', email: '' });
@@ -129,8 +129,19 @@ function App() {
     // Track conversion before redirect
     trackConversion(buttonName);
     
-    const phoneNumber = "5547999224685"; // Replace with actual phone number
-    const message = encodeURIComponent(`Olá! Gostaria de agendar uma consulta médica online por R$39,50. Vim através do site.`);
+    const phoneNumber = "5547999224685";
+    
+    let message;
+    if (buttonName === "FORMULÁRIO ENVIADO") {
+      message = encodeURIComponent(`AGENDAMENTO DE CONSULTA - Doutor Agora 24 Horas
+
+Nome: ${formData.name}
+Data de Nascimento: ${formData.birthdate}
+E-mail: ${formData.email}`);
+    } else {
+      message = encodeURIComponent(`Olá! Gostaria de agendar uma consulta médica online por R$39,50. Vim através do site.`);
+    }
+    
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     
     // Small delay to ensure tracking is sent before redirect
