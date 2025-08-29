@@ -129,7 +129,7 @@ function App() {
     // Track conversion before redirect
     trackConversion(buttonName);
     
-    const phoneNumber = "5548999999999"; // Replace with actual phone number
+    const phoneNumber = "5547999224685"; // Replace with actual phone number
     const message = encodeURIComponent(`Olá! Gostaria de agendar uma consulta médica online por R$39,50. Vim através do site.`);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     
