@@ -55,8 +55,10 @@ function App() {
   const redirectToWhatsApp = (buttonName) => {
     console.log(`Button clicked: ${buttonName}`);
     
-    // Disparar conversão do Google Ads
-    if (typeof gtag !== 'undefined') {
+    // Disparar conversão do Google Ads usando a função global
+    if (typeof window.gtag_report_conversion === 'function') {
+      window.gtag_report_conversion();
+    } else if (typeof gtag !== 'undefined') {
       gtag('event', 'conversion', {
         'send_to': 'AW-17503064450/nx2lCOajIWbEIKjppB'
       });
@@ -74,8 +76,10 @@ function App() {
       const encodedMessage = encodeURIComponent(message);
       const whatsappUrl = `https://wa.me/5547999224685?text=${encodedMessage}`;
 
-      // Disparar conversão do Google Ads
-      if (typeof gtag !== 'undefined') {
+      // Disparar conversão do Google Ads usando a função global
+      if (typeof window.gtag_report_conversion === 'function') {
+        window.gtag_report_conversion();
+      } else if (typeof gtag !== 'undefined') {
         gtag('event', 'conversion', {
           'send_to': 'AW-17503064450/nx2lCOajIWbEIKjppB'
         });
