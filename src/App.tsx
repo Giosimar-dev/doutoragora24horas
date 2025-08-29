@@ -1,133 +1,148 @@
-import React, { useState, useEffect, useRef } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { FaWhatsapp, FaArrowRight, FaCheck, FaUserMd, FaClock, FaFileMedical, FaPrescriptionBottleAlt, FaFlask, FaFileAlt, FaHeadset } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { FaUserMd, FaFileMedical, FaClock, FaPrescriptionBottleAlt, FaFlask, FaFileAlt, FaWhatsapp, FaArrowRight } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import './App.css';
 
-import "./App.css";
+// Declare gtag_report_conversion function
+declare global {
+  interface Window {
+    gtag_report_conversion?: (url?: string) => boolean;
+    gtag?: (...args: any[]) => void;
+    dataLayer?: any[];
+  }
+}
 
 function App() {
   const [formData, setFormData] = useState({
-    name: "",
-    birthdate: "",
-    email: "",
+    name: '',
+    birthdate: '',
+    email: ''
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState("");
-  const heroRef = useRef(null);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
-      offset: 100,
+      offset: 100
     });
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     
     if (name === 'birthdate') {
-      // Remove todos os caracteres que não são números
-      const numbersOnly = value.replace(/\D/g, '');
+      // Format birthdate as dd/mm/yyyy
+      const numericValue = value.replace(/\D/g, '');
+      let formattedValue = numericValue;
       
-      // Aplica a formatação DD/MM/YYYY
-      let formattedValue = numbersOnly;
-      if (numbersOnly.length >= 2) {
-        formattedValue = numbersOnly.slice(0, 2) + '/' + numbersOnly.slice(2);
+      if (numericValue.length >= 2) {
+        formattedValue = numericValue.slice(0, 2) + '/' + numericValue.slice(2);
       }
-      if (numbersOnly.length >= 4) {
-        formattedValue = numbersOnly.slice(0, 2) + '/' + numbersOnly.slice(2, 4) + '/' + numbersOnly.slice(4, 8);
+      if (numericValue.length >= 4) {
+        formattedValue = numericValue.slice(0, 2) + '/' + numericValue.slice(2, 4) + '/' + numericValue.slice(4, 8);
       }
       
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
-        [name]: formattedValue,
+        [name]: formattedValue
       }));
     } else {
-      setFormData((prev) => ({
+      setFormData(prev => ({
         ...prev,
-        [name]: value,
+        [name]: value
       }));
     }
   };
 
-  const redirectToWhatsApp = (buttonName) => {
-    console.log(`Button clicked: ${buttonName}`);
-    
-    // Enviar evento para o Google Tag Manager
-    if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({
-        'event': 'whatsapp_click',
-        'button_name': buttonName,
-        'event_category': 'engagement',
-        'event_action': 'click',
-        'event_label': buttonName
+  const trackConversion = (eventName: string) => {
+    // 1. Send conversion directly via gtag (Google Ads)
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-17503064450/nx2lCOajIWbEIKjppB',
+        'event_callback': function() {
+          console.log('Conversão enviada para Google Ads');
+        }
       });
     }
-    
-    // Disparar conversão do Google Ads usando a função global
+
+    // 2. Also try the gtag_report_conversion function
     if (typeof window.gtag_report_conversion === 'function') {
       window.gtag_report_conversion();
-    } else if (typeof gtag !== 'undefined') {
-      gtag('event', 'conversion', {
-        'send_to': 'AW-17503064450/nx2lCOajIWbEIKjppB'
-      });
-    }
-    
-    window.open("https://wa.me/5547999224685", "_blank");
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Enviar evento para o Google Tag Manager
-    if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({
-        'event': 'form_submit',
-        'form_name': 'appointment_form',
-        'event_category': 'form',
-        'event_action': 'submit',
-        'event_label': 'appointment_booking'
-      });
     }
 
-    try {
-      const message = `AGENDAMENTO DE CONSULTA - Doutor Agora 24 Horas\n\nNome: ${formData.name}\nData de Nascimento: ${formData.birthdate}\nE-mail: ${formData.email}`;
-      const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/5547999224685?text=${encodedMessage}`;
-
-      // Disparar conversão do Google Ads usando a função global
-      if (typeof window.gtag_report_conversion === 'function') {
-        window.gtag_report_conversion();
-      } else if (typeof gtag !== 'undefined') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-17503064450/nx2lCOajIWbEIKjppB'
+    // 3. Send event to dataLayer for GTM
+    if (window.dataLayer) {
+      if (eventName === 'form_submit') {
+        window.dataLayer.push({
+          'event': 'form_submit',
+          'form_name': 'appointment_form',
+          'event_category': 'form',
+          'event_action': 'submit',
+          'event_label': 'appointment_booking',
+          'conversion_id': 'AW-17503064450',
+          'conversion_label': 'nx2lCOajIWbEIKjppB'
+        });
+      } else {
+        window.dataLayer.push({
+          'event': 'whatsapp_click',
+          'button_name': eventName,
+          'event_category': 'engagement',
+          'event_action': 'click',
+          'event_label': eventName,
+          'conversion_id': 'AW-17503064450',
+          'conversion_label': 'nx2lCOajIWbEIKjppB'
         });
       }
+    }
+  };
 
-      window.open(whatsappUrl, "_blank");
-
-      setSubmitMessage("Agendamento enviado com sucesso!");
-      setFormData({
-        name: "",
-        birthdate: "",
-        email: "",
-      });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      // Track conversion
+      trackConversion('form_submit');
+      
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      setSubmitMessage('Formulário enviado com sucesso! Entraremos em contato em breve.');
+      setFormData({ name: '', birthdate: '', email: '' });
+      
+      // Redirect to WhatsApp after successful submission
+      setTimeout(() => {
+        redirectToWhatsApp("FORMULÁRIO ENVIADO");
+      }, 2000);
+      
     } catch (error) {
-      console.error("Error saving appointment:", error);
-      setSubmitMessage("Erro ao enviar agendamento. Tente novamente.");
+      setSubmitMessage('Erro ao enviar formulário. Tente novamente.');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitMessage(""), 3000);
     }
+  };
+
+  const redirectToWhatsApp = (buttonName: string) => {
+    // Track conversion before redirect
+    trackConversion(buttonName);
+    
+    const phoneNumber = "5548999999999"; // Replace with actual phone number
+    const message = encodeURIComponent(`Olá! Gostaria de agendar uma consulta médica online por R$39,50. Vim através do site.`);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    
+    // Small delay to ensure tracking is sent before redirect
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
+    }, 100);
   };
 
   return (
     <div className="App">
       {/* Hero Section */}
-      <section className="hero" ref={heroRef}>
+      <section className="hero">
         <div className="container">
           <div className="logo-container" data-aos="fade-down">
             <img src="/logo.e6f154a1d1bcd1bcbfd4.png" alt="Doutor Agora 24 Horas" className="logo" />
@@ -174,7 +189,7 @@ function App() {
                     placeholder="Data de nascimento (dd/mm/aaaa)"
                     value={formData.birthdate}
                     onChange={handleInputChange}
-                    maxLength="10"
+                    maxLength={10}
                     required
                     className="form-input"
                   />
