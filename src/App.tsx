@@ -55,6 +55,17 @@ function App() {
   const redirectToWhatsApp = (buttonName) => {
     console.log(`Button clicked: ${buttonName}`);
     
+    // Enviar evento para o Google Tag Manager
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({
+        'event': 'whatsapp_click',
+        'button_name': buttonName,
+        'event_category': 'engagement',
+        'event_action': 'click',
+        'event_label': buttonName
+      });
+    }
+    
     // Disparar conversão do Google Ads usando a função global
     if (typeof window.gtag_report_conversion === 'function') {
       window.gtag_report_conversion();
@@ -70,6 +81,17 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Enviar evento para o Google Tag Manager
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({
+        'event': 'form_submit',
+        'form_name': 'appointment_form',
+        'event_category': 'form',
+        'event_action': 'submit',
+        'event_label': 'appointment_booking'
+      });
+    }
 
     try {
       const message = `AGENDAMENTO DE CONSULTA - Doutor Agora 24 Horas\n\nNome: ${formData.name}\nData de Nascimento: ${formData.birthdate}\nE-mail: ${formData.email}`;
