@@ -139,7 +139,7 @@ Nome: ${formData.name}
 Data de Nascimento: ${formData.birthdate}
 E-mail: ${formData.email}`);
     } else {
-      message = encodeURIComponent(`Olá! Gostaria de agendar uma consulta médica online por R$39,50. Vim através do site.`);
+      message = encodeURIComponent(`Olá! Gostaria de agendar uma consulta médica online por R$44,50. Vim através do site.`);
     }
     
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
@@ -174,7 +174,7 @@ E-mail: ${formData.email}`);
               <h1>
                 <span className="title-line">AGENDE CONSULTA</span>
                 <span className="title-line">MÉDICA ONLINE</span>
-                <span className="price-highlight">POR APENAS R$39,50</span>
+                <span className="price-highlight">POR APENAS R$44,50</span>
               </h1>
               <p className="hero-subtitle">
                 Consulta rápida e eficiente com médicos especializados, sem sair de casa
@@ -296,7 +296,7 @@ E-mail: ${formData.email}`);
               <h2>
                 Atendimento Clínico Geral Online
                 por{' '}
-                <span className="price-highlight">R$39,50</span>
+                <span className="price-highlight">R$44,50</span>
               </h2>
               <p>
                 Com agilidade e comodidade direto na sua casa. Cuide da sua saúde onde estiver.
