@@ -115,7 +115,15 @@ function App() {
       
       // Redirect to WhatsApp after successful submission
       setTimeout(() => {
-        redirectToWhatsApp("FORMULÁRIO ENVIADO");
+        const phoneNumber = "5547999224685";
+        const message = encodeURIComponent(`AGENDAMENTO DE CONSULTA - Doutor Agora 24 Horas
+
+Nome: ${formData.name}
+Data de Nascimento: ${formData.birthdate}
+E-mail: ${formData.email}`);
+        
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.location.href = whatsappUrl;
       }, 2000);
       
     } catch (error) {
