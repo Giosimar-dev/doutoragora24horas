@@ -110,7 +110,6 @@ function App() {
       // Track conversion
       trackConversion('form_submit');
       
-      setSubmitMessage('Formulário enviado com sucesso! Entraremos em contato em breve.');
       setFormData({ name: '', birthdate: '', email: '' });
       
       // Redirect to WhatsApp after successful submission
